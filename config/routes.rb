@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   resources :trips
 
   devise_for :users, :controllers => { registrations: 'registrations' }
+  resources :users, only: [:show, :edit, :update]
+
+  #get '/user/:id' => 'users#show', as:'user'
 
   get '/dashboard', to: 'dashboard#index', as: 'dashboard'
 

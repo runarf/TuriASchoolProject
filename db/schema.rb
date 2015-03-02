@@ -11,7 +11,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150217113917) do
+ActiveRecord::Schema.define(version: 20150227132152) do
+
+  create_table "accounts", force: :cascade do |t|
+    t.string   "username"
+    t.string   "email"
+    t.string   "password_digest"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "participant_roles", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "tag_id"
@@ -34,30 +48,39 @@ ActiveRecord::Schema.define(version: 20150217113917) do
   add_index "tags", ["name"], name: "index_tags_on_name", unique: true
 
   create_table "trip_participants", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "trip_id"
+    t.integer  "account_id"
     t.string   "flag"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
-  add_index "trip_participants", ["trip_id"], name: "index_trip_participants_on_trip_id"
-  add_index "trip_participants", ["user_id"], name: "index_trip_participants_on_user_id"
+  add_index "trip_participants", ["account_id"], name: "index_trip_participants_on_account_id"
 
   create_table "trips", force: :cascade do |t|
     t.text     "title"
     t.text     "description"
     t.text     "start_loc"
     t.text     "end_loc"
-    t.text     "image"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.text     "image",       default: ""
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.text     "start_date"
     t.text     "end_date"
+    t.integer  "account_id"
     t.integer  "user_id"
   end
 
+  add_index "trips", ["account_id"], name: "index_trips_on_account_id"
   add_index "trips", ["user_id"], name: "index_trips_on_user_id"
+
+  create_table "user_trips", force: :cascade do |t|
+    t.integer  "trip_id"
+    t.string   "flag"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "user_trips", ["trip_id"], name: "index_user_trips_on_trip_id"
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -73,6 +96,10 @@ ActiveRecord::Schema.define(version: 20150217113917) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "country"
+    t.string   "town"
+    t.integer  "age"
+    t.string   "status"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
