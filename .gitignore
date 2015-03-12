@@ -39,5 +39,6 @@ bower.json
 *~
 .DS_Store
 
+#mail passwords shouldn't be uploaded
 .env
 Procfile
