@@ -18,19 +18,13 @@ feature 'User_page' do
   end
 
   scenario "see user details" do
-    #TODO email
     expect(page).to have_content(user.email)
-    #TODO name
     expect(page).to have_content(user.name)
-    #TODO country and town
     expect(page).to have_content(user.country)
     expect(page).to have_content(user.town)
-    #TODO age
     expect(page).to have_content(user.age)
-    #TODO status
     expect(page).to have_content(user.status)
     #TODO picture
-    # http://tinypic.com/r/2rqyvc9/8
 
   end
 
