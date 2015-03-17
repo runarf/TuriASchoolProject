@@ -13,6 +13,7 @@ Rails.application.routes.draw do
 
   # TODO: Use scopes so that we not bloat our routes.
   resources :trips do
+    #get 'search', on: :collection
     resources :participants
     resources :map
     resources :equipment_lists do
@@ -21,10 +22,13 @@ Rails.application.routes.draw do
         end
     end
     resources :events
-
+    resources :discussions
     resources :media, only: [:index, :show, :destroy]
   end
 
+  resources :discussions do
+    resources :comments
+  end
   devise_for :users, :controllers => { registrations: 'registrations' }
   resources :users, only: [:show, :edit, :update] do
     resources :friendships
