@@ -1,5 +1,4 @@
 <script >
-
     var map = L.map( 'map', {
         center: [20.0, 5.0],
         minZoom: 2,
@@ -38,7 +37,6 @@
         popupAnchor: [0, -14]
     });
 
-
     var undoButtonOptions = {
         'text': '',  // string
         'iconUrl': myURL + 'images/Undo.png',  // string
@@ -59,13 +57,10 @@
         'toggleStatus': false  // bool
     };
 
-
-
     // button (used as a UNDO button atm)
     var undoButton = new L.Control.Button(undoButtonOptions).addTo(map);
 
     var resetButton = new L.Control.Button(resetButtonOptions).addTo(map);
-
 
     // layer for holding the route (markers and lines)
     var waypointLayer = L.layerGroup();
@@ -79,22 +74,14 @@
     // var to hold popup
     var popup = L.popup();
 
-
     function drawMap() {
         // clear old waypoint layer
         waypointLayer.clearLayers();
-
-
         if (markers.length != 0) {
             markers[0].setIcon(startIcon);
         }
-
-
         // adds all makers to waypoint layer
         for(var i = 0; i < markers.length; i++) {
-
-
-
             markers[i].addTo(waypointLayer);
 
             if (i != 0) {
@@ -103,13 +90,8 @@
                         .addTo(waypointLayer);
             }
         }
-
-
-
-
         // draw waypoint layer to map
         waypointLayer.addTo(map);
-
     }
 
 var number = 0
@@ -117,7 +99,6 @@ var number = 0
     function onMapClick(e)
     {
         console.log("someone clicked my map");
-
         popup
                 .setLatLng(e.latlng)
                 .setContent("waypoint #"+markers.length.toString())
@@ -129,11 +110,13 @@ var number = 0
 
         temp.title = "waypoint #"+markers.length.toString();
 
+        // This is some hackish thing to get the server to understand the waypoint data. Should be some
+        // more eloquent way to do this...
         console.log("Putting field %d", number)
         var form_title = '<input type="text" value="' + temp.title + '" id="route_waypoints_attributes_' + number + '_desc" name="route[waypoints_attributes][' + number + '][desc]">';
-        var form_lat = '<input id="route_waypoints_attributes_' + number + '_desc" type="text" value="' + temp.getLatLng().lat + '" name="route[waypoints_attributes][' + number + '][lat]">';
-        var form_lng = '<input id="route_waypoints_attributes_' + number + '_desc" type="text" value="' + temp.getLatLng().lng + '" name="route[waypoints_attributes]['+number+'][lng]">';
-        var form_type = '<input id="route_waypoints_attributes_' + number + '_desc" type="text" value="' + temp.title + '" name="route[waypoints_attributes]['+number+'][type]">';
+        var form_lat = '<input id="route_waypoints_attributes_' + number + '_lat" type="text" value="' + temp.getLatLng().lat + '" name="route[waypoints_attributes][' + number + '][lat]">';
+        var form_lng = '<input id="route_waypoints_attributes_' + number + '_lng" type="text" value="' + temp.getLatLng().lng + '" name="route[waypoints_attributes]['+number+'][lng]">';
+        var form_type = '<input id="route_waypoints_attributes_' + number + '_tralala" type="text" value="' + temp.title + '" name="route[waypoints_attributes]['+number+'][tralala]">';
         console.log("Form_title: %s", form_title);
         console.log("Form_lat: %s", form_lat);
         console.log("Form_lng: %s", form_lng);
@@ -151,20 +134,12 @@ var number = 0
                 ': <input type="text" value="'  + temp.getLatLng().lng  + '" name="lng"/> ' +
                 ': <input type="text" value="'  + temp.title            + '" name="type"/> ' +
                 '<br/></align>')*/
-
-
-
-
-
         markers.push(temp);
-
         drawMap();
-
     }
 
 
     function resetOnClick() {
-
         if (markers.length > 0) {
             var temp = markers[0].getLatLng();
 
@@ -174,7 +149,6 @@ var number = 0
             while (markers.length > 0) {
                 markers.pop();
             }
-
             popup
                     .setLatLng(temp)
                     .setContent("route removed.")
@@ -185,8 +159,6 @@ var number = 0
             console.log("nothing to reset");
         }
     }
-
-
     // handle button clicks, button is atm a UNDO button
     function undoOnClick() {
         console.log("someone clicked my button");
@@ -206,8 +178,6 @@ var number = 0
 
         // Also remove entry from form..
         $('#waypoint-form').find('align').last().remove();
-
-
     }
 
     function POST (route) {
@@ -218,18 +188,10 @@ var number = 0
         $.post( "ajax/test.html", function( dat ) {
             //$( ".result" ).html( data );
         });
-
-
     }
-
     // Event handler for mouse clicks
     map.on('click', onMapClick);
 
-
     // zoom the map to the polyline when a route is loaded on start-up
     //map.fitBounds(polyline.getBounds());
-
-
-
-
 </script>

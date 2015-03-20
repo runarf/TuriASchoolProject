@@ -4,7 +4,7 @@ class CreateWaypoints < ActiveRecord::Migration
       t.string :desc
       t.decimal :lat
       t.decimal :lng
-      t.string :type
+      t.string :tralala
 
       t.timestamps null: false
     end

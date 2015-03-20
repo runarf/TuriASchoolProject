@@ -13,3 +13,11 @@ ParticipantRole.create({ name: 'viewer' })
 
 ApiProvider.delete_all
 ApiProvider.create({ name: 'dropbox' })
+
+#user = User.create(email: "asd@asd.asd",
+#name: "asd",
+#password: "12345678",
+#password_confirmation: "12345678")
+#trip = Trip.create(title: "asd", user: user)
+#trip.user = user
+#trip.participants.create(participant_role_id: ParticipantRole.owner.id, user_id: user)

@@ -9,30 +9,27 @@ class RoutesController < ApplicationController
   end
 
   def show
+    @trip = Trip.find(params[:trip_id])
     @route = Route.find(params[:id])
   end
 
   def new
     @trip = Trip.find(params[:trip_id])
-
   end
 
   def create
     @trip = Trip.find(params[:trip_id])
     @route = @trip.routes.build(route_params)
-    #@route = Route.new(route_params)
-
-
-
-    # redirect_to trip_route_path
+    if @route.save
+      redirect_to [@trip, @route]
+    else
+      render 'new'
+    end
   end
-
-
 
   private
   def route_params
-    byebug
-    params.require(:route).permit(:title, :desc, waypoints_attributes: [:title, :lat, :lng, :type])
+    params.require(:route).permit(:title, :desc, waypoints_attributes: [:desc, :lat, :lng, :tralala])
   end
 
 end
