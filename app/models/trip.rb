@@ -7,6 +7,8 @@ class Trip < ActiveRecord::Base
   has_many :equipment_lists, :dependent => :delete_all
   has_many :api_access_tokens, :dependent => :delete_all
 
+  has_many :routes
+  accepts_nested_attributes_for :routes
   validates_presence_of :title
 
   def self.search(title_search, location_search, tag_search, date_beg, date_end)

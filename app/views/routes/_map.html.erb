@@ -112,7 +112,7 @@
 
     }
 
-
+var number = 0
     // function to be called on mouse click
     function onMapClick(e)
     {
@@ -129,17 +129,28 @@
 
         temp.title = "waypoint #"+markers.length.toString();
 
-
-
+        console.log("Putting field %d", number)
+        var form_title = '<input type="text" value="' + temp.title + '" id="route_waypoints_attributes_' + number + '_desc" name="route[waypoints_attributes][' + number + '][desc]">';
+        var form_lat = '<input id="route_waypoints_attributes_' + number + '_desc" type="text" value="' + temp.getLatLng().lat + '" name="route[waypoints_attributes][' + number + '][lat]">';
+        var form_lng = '<input id="route_waypoints_attributes_' + number + '_desc" type="text" value="' + temp.getLatLng().lng + '" name="route[waypoints_attributes]['+number+'][lng]">';
+        var form_type = '<input id="route_waypoints_attributes_' + number + '_desc" type="text" value="' + temp.title + '" name="route[waypoints_attributes]['+number+'][type]">';
+        console.log("Form_title: %s", form_title);
+        console.log("Form_lat: %s", form_lat);
+        console.log("Form_lng: %s", form_lng);
+        console.log("Form_type: %s", form_type);
         //addInputFieldForWaypoint(temp);
-
+        $('#waypoint-form').append(
+                 form_title + form_lat + form_lng + form_type
+        );
+        number += 1;
+        /*
         $('#waypoint-form')
                 .append('<align> My waypoint: '         + markers.length.toString() +
                 ': <input type="text" value="'  + temp.title            + '" name="desc"/> ' +
                 ': <input type="text" value="'  + temp.getLatLng().lat  + '" name="lat"/> ' +
                 ': <input type="text" value="'  + temp.getLatLng().lng  + '" name="lng"/> ' +
                 ': <input type="text" value="'  + temp.title            + '" name="type"/> ' +
-                '<br/></align>')
+                '<br/></align>')*/
 
 
 
