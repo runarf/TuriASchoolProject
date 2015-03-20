@@ -30,7 +30,7 @@ RSpec.describe DiscussionsController, type: :controller do
     end
 
     context 'with invalid attributes' do
-      it 'doesn\' create a new discussion' do
+      it 'doesn\'t create a new discussion' do
         expect {
           post :create, discussion: { title: '', body: ''}, trip: @trip, user: @user
         }.to change(Discussion, :count).by(0)

@@ -9,7 +9,7 @@ RSpec.describe Discussion, type: :model do
 
   it 'is not valid without title' do
     expect{
-      FactoryGirl.create(:discussion, )
-    }
+      FactoryGirl.create(:discussion, title: "")
+    }.to raise_error ActiveRecord::RecordInvalid
   end
 end
