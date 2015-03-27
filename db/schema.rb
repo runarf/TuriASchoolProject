@@ -11,16 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150308123948) do
+ActiveRecord::Schema.define(version: 20150324124701) do
 
   create_table "api_access_tokens", force: :cascade do |t|
     t.integer  "user_id"
     t.integer  "trip_id"
     t.integer  "api_provider_id"
-    t.string   "token",           null: false
-    t.string   "item"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.string   "token",                        null: false
+    t.string   "item",            default: ""
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
   end
 
   add_index "api_access_tokens", ["api_provider_id"], name: "index_api_access_tokens_on_api_provider_id"
@@ -33,6 +33,29 @@ ActiveRecord::Schema.define(version: 20150308123948) do
   end
 
   add_index "api_providers", ["name"], name: "index_api_providers_on_name", unique: true
+
+  create_table "comments", force: :cascade do |t|
+    t.text     "body",          null: false
+    t.integer  "discussion_id"
+    t.integer  "user_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+  end
+
+  add_index "comments", ["discussion_id"], name: "index_comments_on_discussion_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
+
+  create_table "discussions", force: :cascade do |t|
+    t.integer  "trip_id"
+    t.integer  "user_id"
+    t.text     "title",      null: false
+    t.text     "body"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "discussions", ["trip_id"], name: "index_discussions_on_trip_id"
+  add_index "discussions", ["user_id"], name: "index_discussions_on_user_id"
 
   create_table "equipment_lists", force: :cascade do |t|
     t.string   "name"
@@ -55,7 +78,6 @@ ActiveRecord::Schema.define(version: 20150308123948) do
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.string   "location"
-    t.boolean  "all_day"
   end
 
   add_index "events", ["trip_id"], name: "index_events_on_trip_id"
