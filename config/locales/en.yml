@@ -132,3 +132,11 @@ en:
   dropbox_auth_not_approved_error:  "Not approved? Why not, bro?"
   dropbox_auth_provider_error:      "Strange error."
   dropbox_error:                    "Error communicating with Dropbox servers."
+
+  # discussion
+  discussion_updated:               "Discussion has been updated."
+  discussion_not_updated:           "Discussion has not been updated."
+  discussion_created:               "Discussion has been created."
+  discussion_not_created:           "Discussion has not been created."
+  discussion_destroyed:             "Discussion has been deleted."
+  trip_discussions_form:                 "Your discussion for '%{trip_title}'"
