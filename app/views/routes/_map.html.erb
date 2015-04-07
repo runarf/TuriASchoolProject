@@ -1,14 +1,14 @@
-<script >
-    var map = L.map( 'map', {
+<script>
+    var map = L.map('map', {
         center: [20.0, 5.0],
         minZoom: 2,
         zoom: 2
     });
 
-    L.tileLayer( 'http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
+    L.tileLayer('http://{s}.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.png', {
         attribution: '&copy; <a href="http://osm.org/copyright" title="OpenStreetMap" target="_blank">OpenStreetMap</a> contributors | Tiles Courtesy of <a href="http://www.mapquest.com/" title="MapQuest" target="_blank">MapQuest</a> <img src="http://developer.mapquest.com/content/osm/mq_logo.png" width="16" height="16">',
-        subdomains: ['otile1','otile2','otile3','otile4']
-    }).addTo( map );
+        subdomains: ['otile1', 'otile2', 'otile3', 'otile4']
+    }).addTo(map);
 
     //var myURL = jQuery( 'script[src$="leaf-demo.js"]' ).attr( 'src' ).replace( 'leaf-demo.js', '' );
     var myURL = '~public/app/maps'
@@ -81,7 +81,7 @@
             markers[0].setIcon(startIcon);
         }
         // adds all makers to waypoint layer
-        for(var i = 0; i < markers.length; i++) {
+        for (var i = 0; i < markers.length; i++) {
             markers[i].addTo(waypointLayer);
 
             if (i != 0) {
@@ -94,46 +94,65 @@
         waypointLayer.addTo(map);
     }
 
-var number = 0
+    var number = 0
     // function to be called on mouse click
-    function onMapClick(e)
-    {
+    function onMapClick(e) {
         console.log("someone clicked my map");
         popup
                 .setLatLng(e.latlng)
-                .setContent("waypoint #"+markers.length.toString())
+                .setContent("waypoint #" + markers.length.toString())
                 .openOn(map);
 
 
         var temp = L.marker(e.latlng, {icon: wayPointIcon})
-                .bindPopup("waypoint #"+markers.length.toString());
+                .bindPopup("waypoint #" + markers.length.toString());
 
-        temp.title = "waypoint #"+markers.length.toString();
+        temp.title = "waypoint #" + markers.length.toString();
 
         // This is some hackish thing to get the server to understand the waypoint data. Should be some
         // more eloquent way to do this...
-        console.log("Putting field %d", number)
-        var form_title = '<input type="text" value="' + temp.title + '" id="route_waypoints_attributes_' + number + '_desc" name="route[waypoints_attributes][' + number + '][desc]">';
-        var form_lat = '<input id="route_waypoints_attributes_' + number + '_lat" type="text" value="' + temp.getLatLng().lat + '" name="route[waypoints_attributes][' + number + '][lat]">';
-        var form_lng = '<input id="route_waypoints_attributes_' + number + '_lng" type="text" value="' + temp.getLatLng().lng + '" name="route[waypoints_attributes]['+number+'][lng]">';
-        var form_type = '<input id="route_waypoints_attributes_' + number + '_tralala" type="text" value="' + temp.title + '" name="route[waypoints_attributes]['+number+'][tralala]">';
+        console.log("Putting field %d", number);
+        var lat = temp.getLatLng().lat;
+        var lng = temp.getLatLng().lng;
+        console.log("Lat is %f", lat);
+        console.log("Lng is %f", lng);
+
+        var form_title = '<input ' +
+                'id="route_waypoints_attributes_' + number + '_desc" ' +
+                'type="text" value="' + temp.title + '" ' +
+                'name="route[waypoints_attributes][' + number + '][desc]">';
+        var form_lat = '<input ' +
+                'id="route_waypoints_attributes_' + number + '_lat" ' +
+                'type="number" value="' + lat + '" ' +
+                'name="route[waypoints_attributes][' + number + '][lat]">';
+        var form_lng = '<input ' +
+                'id="route_waypoints_attributes_' + number + '_lng" ' +
+                'type="number" ' +
+                'value="' + lng + '" ' +
+                'name="route[waypoints_attributes][' + number + '][lng]">';
+        var form_type = '<input ' +
+                'id="route_waypoints_attributes_' + number + '_tralala" ' +
+                'type="text" ' +
+                'value="' + temp.title + '" ' +
+                'name="route[waypoints_attributes][' + number + '][tralala]">';
+
         console.log("Form_title: %s", form_title);
         console.log("Form_lat: %s", form_lat);
         console.log("Form_lng: %s", form_lng);
         console.log("Form_type: %s", form_type);
         //addInputFieldForWaypoint(temp);
         $('#waypoint-form').append(
-                 form_title + form_lat + form_lng + form_type
+                form_title + form_lat + form_lng + form_type + "<br>"
         );
         number += 1;
         /*
-        $('#waypoint-form')
-                .append('<align> My waypoint: '         + markers.length.toString() +
-                ': <input type="text" value="'  + temp.title            + '" name="desc"/> ' +
-                ': <input type="text" value="'  + temp.getLatLng().lat  + '" name="lat"/> ' +
-                ': <input type="text" value="'  + temp.getLatLng().lng  + '" name="lng"/> ' +
-                ': <input type="text" value="'  + temp.title            + '" name="type"/> ' +
-                '<br/></align>')*/
+         $('#waypoint-form')
+         .append('<align> My waypoint: '         + markers.length.toString() +
+         ': <input type="text" value="'  + temp.title            + '" name="desc"/> ' +
+         ': <input type="text" value="'  + temp.getLatLng().lat  + '" name="lat"/> ' +
+         ': <input type="text" value="'  + temp.getLatLng().lng  + '" name="lng"/> ' +
+         ': <input type="text" value="'  + temp.title            + '" name="type"/> ' +
+         '<br/></align>')*/
         markers.push(temp);
         drawMap();
     }
@@ -180,12 +199,12 @@ var number = 0
         $('#waypoint-form').find('align').last().remove();
     }
 
-    function POST (route) {
+    function POST(route) {
         var dat = JSON.stringify(route);
 
         console.log("I am about to POST this: \n\n" + dat);
 
-        $.post( "ajax/test.html", function( dat ) {
+        $.post("ajax/test.html", function (dat) {
             //$( ".result" ).html( data );
         });
     }

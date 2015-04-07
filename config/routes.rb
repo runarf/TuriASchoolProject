@@ -14,7 +14,6 @@ Rails.application.routes.draw do
     resources :participants
     resources :routes
     resources :equipment_lists
-
     resources :media, only: [:index, :show, :destroy]
   end
 
