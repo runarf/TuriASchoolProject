@@ -13,7 +13,7 @@ RSpec.feature "Comments" do
   end
 
   context "create a comment" do
-    scenario "with valid attributes" do
+    scenario "with valid attributes", js: true do
       body = 'This is my body, this is my mind'
       fill_in 'comment_body', with: body
       click_button 'save-comment-btn'
@@ -23,10 +23,11 @@ RSpec.feature "Comments" do
       end
     end
 
-    scenario "with invalid attributes" do
+    scenario "with invalid attributes", js: true do
       old_page = page
       fill_in 'comment_body', with: ''
       click_button 'save-comment-btn'
+
       expect(page).to eql(old_page)
     end
   end
