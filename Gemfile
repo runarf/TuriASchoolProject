@@ -87,7 +87,7 @@ group :test do
   gem 'codeclimate-test-reporter', require: nil
   gem 'email_spec'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper', '0.0.6'
+  gem 'database_cleaner'
 end
 
 # Heroku
